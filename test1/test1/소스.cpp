@@ -24,9 +24,10 @@ typedef Tree * pTree;
 typedef CharFrequency * pCharFrequency;
 
 Tree heapArr[10000] = { 0 };
+int direction[20];
 int tailIndex = 0;
 Tree* root = NULL;
-int* detectdirection(int index);
+void detectdirection(int* level, int index);
 void pushNode(char* word);
 Tree popNode();
 
@@ -89,14 +90,18 @@ int main() {
 
 
 
-int * detectdirection(int index) {
-	int temp[20], level[20];
-	int i;
+void detectdirection(int* level, int index) {
+	int temp[20];
+	int i, j;
 	for (i = 0; index>1; i++)
 	{
 		temp[i] = index % 2;
+		index /= 2;
 	}
-	return nullptr;
+	for (j = 0; j < sizeof(temp) / 4; j++)
+	{
+		level[j] = temp[i - 1 - j];
+	}
 }
 
 void pushNode(char * word) {
@@ -107,6 +112,6 @@ void pushNode(char * word) {
 		tailIndex++;
 	}
 	else {
-
+		detectdirection(direction, tailIndex);
 	}
 }
