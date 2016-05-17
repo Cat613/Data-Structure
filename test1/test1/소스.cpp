@@ -13,7 +13,7 @@ typedef struct CharFrequency {
 }CharFrequency;
 
 
-typedef struct HeapTree {
+typedef struct Tree {
 	int index;
 	Tree* left;
 	Tree* right;
@@ -25,11 +25,14 @@ typedef CharFrequency * pCharFrequency;
 
 Tree heapArr[10000] = { 0 };
 int direction[20];
-int tailIndex = 0;
+int tail_Index = 0;
+int directionIndex = 0;
 Tree* root = NULL;
 void detectdirection(int* level, int index);
-void pushNode(char* word);
-Tree popNode();
+void pushNode(pTree heap, char* word);
+Tree popNode(pTree heap);
+pTree searchNode(pTree heap, int index);
+void setArray(int* arr);
 
 
 int main() {
@@ -78,12 +81,6 @@ int main() {
 
 	fclose(inputT);
 
-
-
-
-
-
-
 	return 0;
 
 }
@@ -104,14 +101,59 @@ void detectdirection(int* level, int index) {
 	}
 }
 
-void pushNode(char * word) {
+void pushNode(pTree heap, char * word) {
+	pTree parent, newNode;
 	if (root == NULL) {
 		root->data.character = word;
 		root->index = 1;
 		heapArr[1] = *root;
-		tailIndex++;
+		tail_Index++;
 	}
 	else {
-		detectdirection(direction, tailIndex);
+		setArray(direction);
+		//detectdirection(direction, tail_Index);
+
+		parent = searchNode(heap, (++tail_Index)/2);
+		if (parent->left == NULL){ newNode = parent->left; }
+		else{ newNode = parent->right; }
+	}
+	
+
+
+
+
+
+
+}
+
+Tree popNode(pTree heap){
+	pTree minheap;
+	minheap = heap;
+
+
+	heap->data.character = ;
+
+}
+
+pTree searchNode(pTree heap, int index){
+	detectdirection(direction, index);
+	if (direction[directionIndex]==-1 && heap->index == index){
+		return heap;
+	}
+	if (direction[directionIndex] == 0){
+		directionIndex++;
+		searchNode(heap->left, index);
+	}
+	else{
+		directionIndex++;
+		searchNode(heap->right, index);
+	}
+	
+}
+
+void setArray(int* arr){
+	for (int i = 0; i < sizeof(arr)/4; i++)
+	{
+		arr[i] = -1;
 	}
 }
